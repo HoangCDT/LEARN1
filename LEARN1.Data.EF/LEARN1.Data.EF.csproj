@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LEARN1.Data\LEARN1.Data.csproj" />
+    <ProjectReference Include="..\LEARN1.Infrastructure\LEARN1.Infrastructure.csproj" />
+    <ProjectReference Include="..\LEARN1.Utilities\LEARN1.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>
