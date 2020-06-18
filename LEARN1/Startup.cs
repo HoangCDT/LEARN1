@@ -12,6 +12,15 @@ using LEARN1.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using LEARN1.Data.EF;
+using LEARN1.Data.Entities;
+using AutoMapper;
+using LEARN1.Application.AutoMapper;
+using LEARN1.Data.IRepositoties;
+using LEARN1.Data.EF.Repositories;
+using LEARN1.Application.Interfaces;
+using LEARN1.Application.Implementation;
+using LEARN1.Infrastructure.Interfaces;
 
 namespace LEARN1
 {
@@ -27,11 +36,34 @@ namespace LEARN1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                    Configuration.GetConnectionString("ConnectionStrings"),
+                    o => o.MigrationsAssembly("LEARN1.Data.EF")));
+
+            services.AddIdentity<AppUser, AppRole>()
+                    .AddEntityFrameworkStores<AppDbContext>()
+                    .AddDefaultTokenProviders();
+
+            //Auto Mapper
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IMapper>(sp =>
+            {
+                return new Mapper(AutoMapperConfig.RegisterMappings());
+            });
+
+            services.AddSingleton(AutoMapperConfig.RegisterMappings());
+
+            services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
+            services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
+
+            services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
+            services.AddTransient(typeof(IRepository<,>), typeof(EFRepository<,>));
+            services.AddTransient<IClewRepository, ClewRepository>();
+            services.AddTransient<IClewService, ClewService>();
+
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
