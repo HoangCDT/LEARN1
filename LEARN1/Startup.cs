@@ -21,6 +21,8 @@ using LEARN1.Data.EF.Repositories;
 using LEARN1.Application.Interfaces;
 using LEARN1.Application.Implementation;
 using LEARN1.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Routing.Template;
+using Microsoft.Extensions.Logging;
 
 namespace LEARN1
 {
@@ -69,8 +71,9 @@ namespace LEARN1
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddFile("Logs/QLVS-{Date}.txt");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -95,6 +98,12 @@ namespace LEARN1
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name:"areaRoute",
+                    pattern:"{area:exists}/{controller=AdminHome}/{action= Index}/{Id?}");
+                endpoints.MapControllerRoute(
+                   name: "adminLogin",
+                   pattern: "{area:exists}/{controller=Login}/{action= Index}/{Id?}");
                 endpoints.MapRazorPages();
             });
         }
