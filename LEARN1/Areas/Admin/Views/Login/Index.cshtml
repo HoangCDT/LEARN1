@@ -59,23 +59,11 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" href="#" id="btnLogin" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        <button type="button" href="#" id="btnLogin" class="btn btn-primary btn-block btn-flat">Sign In</button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
-
-            <div class="social-auth-links text-center">
-                <p>- OR -</p>
-                <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
-                    <i class="fa fa-facebook"></i> Sign in using
-                    Facebook
-                </a>
-                <a href="#" class="btn btn-block btn-social btn-google btn-flat">
-                    <i class="fa fa-google-plus"></i> Sign in using
-                    Google+
-                </a>
-            </div>
             <!-- /.social-auth-links -->
             <a href="#">I forgot my password</a><br>
             <a href="register.html" class="text-center">Register a new membership</a>
@@ -91,8 +79,8 @@
     <!-- Bootstrap 3.3.6 -->
     <script src="~/admin-side/bootstrap/js/bootstrap.min.js"></script>
     <!-- iCheck -->
-    <script src="~/admin-side/plugins/iCheck/icheck.min.js"></script>
-
+    <script src="~/admin-side/plugins/iCheck/icheck.js"></script>
+    
     <script>
         $(function () {
             $('input').iCheck({
@@ -102,15 +90,9 @@
             });
         });
     </script>
-
     <script src="~/js/notify.js"></script>
     <script src="~/js/notify-metro.js"></script>
-    <script src="~/app/controllers/login/index.js"></script>
     <script src="~/app/shared/qlvs.js"></script>
-
-    <script>
-        var login = new loginController(); p
-        login.initialize();
-    </script>
+    <script src="~/app/controllers/login/index.js"></script>
 </body>
 </html>
