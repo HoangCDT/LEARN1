@@ -7,9 +7,7 @@ var LoginController = {
         let self = this;
         $('#btnLogin').on('click', function (e) {
             e.preventDefault();
-            var user = $('#txtUserName').val();
-            var pass = $('#txtPassword').val();
-            self.Methods.login(user, pass);
+            self.Methods.validationLogin();
         });
     },
     Methods: {
@@ -21,15 +19,34 @@ var LoginController = {
                     Password: pass
                 },
                 dataType: 'json',
-                url: 'admin/login/authen',
+                url: '/Admin/Login/Authen',
                 success: function (res) {
                     if (res.Success) {
                         window.location.href = "/Admin/AdminHome/Index";
                     } else {
                         qlvs.notify('User hoặc pass chưa đúng!', 'error');
+                        $('#txtUserName').val
                     }
                 }
             })
+        },
+        validationLogin() {
+            let self = this;
+            var valiObj = $('#login-form').validate({
+                rules: {
+                    name: "required",
+                    password: "required"
+                },
+                messages: {
+                    name: "Chưa nhập tài khoản",
+                    password: "Chưa nhập mật khẩu"
+                },
+                submitHandler: function () {
+                    var user = $('#txtUserName').val();
+                    var pass = $('#txtPassword').val();
+                    self.login(user, pass);
+                }
+            });
         }
         
     }

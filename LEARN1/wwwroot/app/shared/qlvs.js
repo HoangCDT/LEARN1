@@ -19,7 +19,7 @@ var qlvs = {
             // position defines the notification position though uses the defaults below
             position: '...',
             // default positions
-            elementPosition: 'top right',
+            elementPosition: 'bottom left',
             globalPosition: 'top right',
             // default style
             style: 'bootstrap',
